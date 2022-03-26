@@ -10,24 +10,26 @@ const Add = props => {
   const input_ref = React.useRef([]);
 
   const save = () => {
-    dispatch(
-      addWordFB(
-        input_ref.current[0].value,
-        input_ref.current[1].value,
-        input_ref.current[2].value
-      )
-    );
+    const term = input_ref.current[0].value;
+    const mean = input_ref.current[1].value;
+    const link = input_ref.current[2].value;
+    if (!term || !mean || !link) {
+      alert("빈칸채워줘잉");
+      return;
+    }
+    dispatch(addWordFB(term, mean, link, false));
     navigate(-1);
   };
 
   return (
     <InputContainer className="flex-column-center">
-      <h2>추가하기</h2>
+      <h1>추가하기</h1>
       <div className="input-box">
         <input
           id="input-term"
           type="text"
           placeholder=" "
+          autoComplete="off"
           ref={el => (input_ref.current[0] = el)}
         ></input>
         <label>용어</label>
@@ -37,6 +39,7 @@ const Add = props => {
           id="input-mean"
           type="text"
           placeholder=" "
+          autoComplete="off"
           ref={el => (input_ref.current[1] = el)}
         ></input>
         <label>의미</label>
@@ -46,6 +49,7 @@ const Add = props => {
           id="input-link"
           type="text"
           placeholder=" "
+          autoComplete="off"
           ref={el => (input_ref.current[2] = el)}
         ></input>
         <label>링크</label>

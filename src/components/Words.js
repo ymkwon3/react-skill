@@ -3,36 +3,24 @@ import WordCard from "./WordCard";
 import { WordWrap } from "../Styled";
 import { BsPatchPlusFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { db } from "../firebase";
+import { useSelector, useDispatch } from "react-redux";
+import { loadWordFB } from "../redux/modules/wordModule";
 
 const Words = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const selector = Array.from(useSelector(state => state.wordModule.words));
+
+  React.useEffect(() => {
+    dispatch(loadWordFB());
+  }, []);
+
   return (
     <>
       <WordWrap className="flex-row-start">
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
-        <WordCard></WordCard>
+        {selector.map((v, i) => (
+          <WordCard key={v[0]} value={v[1]}></WordCard>
+        ))}
       </WordWrap>
       <BsPatchPlusFill
         className="bsPatchPlusFill hoverEvent"
