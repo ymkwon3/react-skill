@@ -38,8 +38,6 @@ const Bicycle = () => {
   );
 };
 
-
-
 const driving = keyframes`
   0% {
     margin-bottom: 5px;   //위아래 움직이기

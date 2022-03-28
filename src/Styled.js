@@ -1,4 +1,17 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
+import { BsPatchPlusFill } from "react-icons/bs";
+// todo: 여러 색으로 변경가능하게 만들어보기
+const Root = styled.div`
+  --c: #ffffff;
+  --pc: ${props => {
+    switch (props.c) {
+      case "c1":
+        return "#ff6e60";
+      case "c2":
+        return "#6263a2";
+    }
+  }};
+`;
 
 // 헤더 부분
 const Header = styled.div`
@@ -7,9 +20,10 @@ const Header = styled.div`
   top: 0;
   width: 100%;
   height: 60px;
-  background-color: #ff6e60;
+  background-color: var(--pc);
   border-radius: 0 0 12px 12px;
   color: white;
+  user-select: none;
 `;
 
 // 헤더 밑의 div
@@ -26,7 +40,7 @@ const InputContainer = styled.div`
   gap: 40px;
 
   h1 {
-    color: #ff6e60;
+    color: var(--pc);
   }
 
   .input-box {
@@ -35,12 +49,13 @@ const InputContainer = styled.div`
     height: 40px;
   }
 
-  input, textarea {
+  input,
+  textarea {
     width: 100%;
     height: 100%;
     outline: none;
     border: none;
-    border-bottom: 1px solid #ff6e60;
+    border-bottom: 1px solid var(--pc);
     background-color: transparent;
     color: black;
     font-size: 20px;
@@ -64,14 +79,14 @@ const InputContainer = styled.div`
   }
 
   input:focus {
-    border-bottom: 3px solid #ff6e60;
+    border-bottom: 3px solid var(--pc);
   }
 
   button {
     width: 300px;
     height: 60px;
     border: none;
-    background-color: #ff6e60;
+    background-color: var(--pc);
     border-radius: 15px;
     color: white;
     font-size: 18px;
@@ -103,13 +118,13 @@ const WordWrap = styled.div`
 // 단어 div
 const Card = styled.div`
   position: relative;
-  border: 2px solid #ff6e60;
+  border: 2px solid var(--pc);
   border-radius: 15px;
   width: 100%;
   padding: 20px;
   font-size: 20px;
-  background-color: ${props => (props.checked ? "#ff6e60" : "#fff")};
-  color: ${props => (props.checked ? "#fff" : "#ff6e60")};
+  background-color: ${props => (props.checked ? css`var(--pc)` : "#fff")};
+  color: ${props => (props.checked ? "#fff" : css`var(--pc)`)};
 
   h4 {
     font-size: 24px;
@@ -155,4 +170,8 @@ const Card = styled.div`
   }
 `;
 
-export { Header, Container, Card, WordWrap, InputContainer };
+const AddIcon = styled(BsPatchPlusFill)`
+  color: var(--pc);
+`
+
+export { Header, Container, Card, WordWrap, InputContainer, Root, AddIcon };

@@ -17,7 +17,7 @@ const Add = props => {
       alert("빈칸채워줘잉");
       return;
     }
-    dispatch(addWordFB(term, mean, link, false));
+    dispatch(addWordFB({ term: term, mean: mean, link: link, checked: false }));
     navigate(-1);
   };
 

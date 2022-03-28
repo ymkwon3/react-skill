@@ -1,6 +1,6 @@
 import React from "react";
 import { InputContainer } from "../Styled";
-import { addWordFB, loadWordFB } from "../redux/modules/wordModule";
+import { addWordFB } from "../redux/modules/wordModule";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -9,13 +9,12 @@ const Edit = props => {
   const navigate = useNavigate();
   const input_ref = React.useRef([]);
   const id = useParams().id;
-  dispatch(loadWordFB());
-  const term_data = useSelector(state => state.wordModule.words).get(id);
-
+  const list = useSelector(state => state.wordModule.words);
+  const term_data = list.filter(v => v.term == id)[0];
   React.useEffect(() => {
-    input_ref.current[0].value = term_data[0];
-    input_ref.current[1].value = term_data[1];
-    input_ref.current[2].value = term_data[2];
+    input_ref.current[0].value = term_data.term;
+    input_ref.current[1].value = term_data.mean;
+    input_ref.current[2].value = term_data.link;
   }, []);
 
 
@@ -27,7 +26,7 @@ const Edit = props => {
       alert("빈칸채워줘잉");
       return;
     }
-    dispatch(addWordFB(term, mean, link, term_data[3]));
+    dispatch(addWordFB({ term: term, mean: mean, link: link, checked: term_data.checked }));
     navigate(-1);
   };
 
@@ -41,6 +40,7 @@ const Edit = props => {
           placeholder=" "
           autoComplete="off"
           ref={el => (input_ref.current[0] = el)}
+          readOnly
         ></input>
         <label>용어</label>
       </div>
