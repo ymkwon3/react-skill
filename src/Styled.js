@@ -1,6 +1,6 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 import { BsPatchPlusFill } from "react-icons/bs";
-// todo: 여러 색으로 변경가능하게 만들어보기
+
 const Root = styled.div`
   --c: #ffffff;
   --pc: ${props => {
@@ -24,12 +24,14 @@ const Header = styled.div`
   border-radius: 0 0 12px 12px;
   color: white;
   user-select: none;
+  cursor: pointer;
 `;
 
 // 헤더 밑의 div
 const Container = styled.div`
   width: 100%;
   max-height: 60vh;
+  padding: 30px;
   overflow: scroll;
 `;
 
@@ -41,6 +43,7 @@ const InputContainer = styled.div`
 
   h1 {
     color: var(--pc);
+    user-select: none;
   }
 
   .input-box {
@@ -56,16 +59,16 @@ const InputContainer = styled.div`
     outline: none;
     border: none;
     border-bottom: 1px solid var(--pc);
-    background-color: transparent;
-    color: black;
+    color: #000000;
     font-size: 20px;
+    font-family: "Cute Font";
   }
 
   label {
     position: absolute;
     left: 0;
     top: 0px;
-    color: black;
+    color: var(--pc);
     transition: 0.2s;
     user-select: none;
     font-size: 24px;
@@ -74,7 +77,7 @@ const InputContainer = styled.div`
   input:focus + label,
   input:not(:placeholder-shown) + label {
     transform: translateY(-20px);
-    opacity: 0.5;
+    opacity: 0.7;
     font-size: 18px;
   }
 
@@ -83,7 +86,7 @@ const InputContainer = styled.div`
   }
 
   button {
-    width: 300px;
+    width: 140px;
     height: 60px;
     border: none;
     background-color: var(--pc);
@@ -92,6 +95,7 @@ const InputContainer = styled.div`
     font-size: 18px;
     font-weight: bold;
     transition: 0.05s;
+    margin: 0 10px;
     cursor: pointer;
   }
 
@@ -102,6 +106,8 @@ const InputContainer = styled.div`
 
 // 단어들 감싸는 div, 반응형으로 1개, 2개, 3개 될 수 있게
 const WordWrap = styled.div`
+  border: 1px solid var(--pc);
+  border-radius: 15px;
   flex-wrap: wrap;
   padding: 30px;
   gap: 20px;
@@ -172,6 +178,14 @@ const Card = styled.div`
 
 const AddIcon = styled(BsPatchPlusFill)`
   color: var(--pc);
-`
+  z-index: 10;
+  position: fixed;
+  right: 20px;
+  bottom: 80px;
+
+  &:hover {
+    transform: rotate(90deg) !important;
+  }
+`;
 
 export { Header, Container, Card, WordWrap, InputContainer, Root, AddIcon };

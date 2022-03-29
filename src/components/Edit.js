@@ -11,12 +11,12 @@ const Edit = props => {
   const id = useParams().id;
   const list = useSelector(state => state.wordModule.words);
   const term_data = list.filter(v => v.term == id)[0];
+
   React.useEffect(() => {
     input_ref.current[0].value = term_data.term;
     input_ref.current[1].value = term_data.mean;
     input_ref.current[2].value = term_data.link;
   }, []);
-
 
   const save = () => {
     const term = input_ref.current[0].value;
@@ -26,7 +26,14 @@ const Edit = props => {
       alert("빈칸채워줘잉");
       return;
     }
-    dispatch(addWordFB({ term: term, mean: mean, link: link, checked: term_data.checked }));
+    dispatch(
+      addWordFB({
+        term: term,
+        mean: mean,
+        link: link,
+        checked: term_data.checked,
+      })
+    );
     navigate(-1);
   };
 
@@ -64,7 +71,10 @@ const Edit = props => {
         ></input>
         <label>링크</label>
       </div>
-      <button onClick={save}>저장하기</button>
+      <div className="flex-row-center">
+        <button onClick={() => navigate(-1)}>취소하기</button>
+        <button onClick={save}>저장하기</button>
+      </div>
     </InputContainer>
   );
 };

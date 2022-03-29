@@ -28,10 +28,12 @@ const Bike = () => {
 };
 
 const Bicycle = () => {
-  const selector = useSelector(state => state.wordModule.progress);
+  const progress = useSelector(state => state.wordModule.progress);
+  const length = useSelector(state => state.wordModule.words).length;
+  const rate = progress / length;
   return (
     <CustomBicycle
-      progress={selector}
+      progress={rate ? rate : 0}
       color="#000000"
       size={160}
     />

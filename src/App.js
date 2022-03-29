@@ -10,11 +10,11 @@ import Bike from "./components/Bike";
 
 function App() {
   const [color, setColor] = React.useState("c1");
+  // 헤더 클릭 시, primary color 변경
   const setTheme = () => {
     color === "c1" ? setColor("c2") : setColor("c1");
   }
 
-  const ref = React.useRef();
   return (
     <Root className="flex-column-center App" c={color}>
       <Header className="flex-column-center" onClick={() => setTheme()}>

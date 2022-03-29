@@ -51,16 +51,6 @@
   align-items: center;
 }
 
-.bsPatchPlusFill {
-  z-index: 10;
-  position: fixed;
-  right: 20px;
-  bottom: 80px;
-}
-
-.bsPatchPlusFill:hover {
-  transform: rotate(90deg)!important;
-}
 
 .hoverEvent {
   transition: 0.2s;

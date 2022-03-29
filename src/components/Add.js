@@ -4,7 +4,7 @@ import { addWordFB } from "../redux/modules/wordModule";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const Add = props => {
+const Add = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const input_ref = React.useRef([]);
@@ -54,7 +54,10 @@ const Add = props => {
         ></input>
         <label>링크</label>
       </div>
-      <button onClick={save}>저장하기</button>
+      <div className="flex-row-center">
+        <button onClick={() => navigate(-1)}>취소하기</button>
+        <button onClick={save}>저장하기</button>
+      </div>
     </InputContainer>
   );
 };
