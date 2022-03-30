@@ -4,7 +4,7 @@ import { addWordFB } from "../redux/modules/wordModule";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Edit = props => {
+const Edit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const input_ref = React.useRef([]);

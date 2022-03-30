@@ -6,6 +6,10 @@
   font-family: 'Cute Font', cursive;
 }
 
+input {
+  font-family: 'Cute Font', cursive;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -50,7 +54,6 @@
   justify-content: flex-start;
   align-items: center;
 }
-
 
 .hoverEvent {
   transition: 0.2s;

@@ -1,9 +1,15 @@
 import React from "react";
 import WordCard from "./WordCard";
-import { WordWrap, AddIcon } from "../Styled";
+import {
+  WordWrap,
+  AddIcon,
+  SearchIcon,
+  SearchDiv,
+  SearchInput,
+} from "../Styled";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { loadWordFB } from "../redux/modules/wordModule";
+import { loadWordFB, searchWordFB } from "../redux/modules/wordModule";
 
 const Words = () => {
   const [cursor, setCursor] = React.useState(null);
@@ -11,6 +17,8 @@ const Words = () => {
   const dispatch = useDispatch();
   const selector = useSelector(state => state.wordModule.words);
   const lastValue = useSelector(state => state.wordModule.lastValue);
+  const isSearch = useSelector(state => state.wordModule.isSearch);
+  const searchRef = React.useRef(null);
 
   React.useEffect(() => {
     dispatch(loadWordFB(null));
@@ -35,13 +43,28 @@ const Words = () => {
     return () => observer && observer.disconnect();
   }, [cursor]);
 
+  const searchClick = () => {
+    dispatch(searchWordFB(searchRef.current.value));
+  }
+
+  window.onkeydown = e => e.key == "Enter" ? searchClick() : null;
+
   return (
     <>
+      <SearchDiv>
+        <SearchIcon className="search-icon" size={30} />
+        <SearchInput
+          ref={searchRef}
+          placeholder=" "
+          autoComplete="none"
+        ></SearchInput>
+      </SearchDiv>
+
       <WordWrap className="flex-row-start">
         {selector.map((v, i) => {
           const isLast = i === selector.length - 1;
           return (
-            <WordCard key={v.term} value={v} ref={isLast ? setCursor : null} />
+            <WordCard key={v.term} value={v} ref={isLast && !isSearch ? setCursor : null} />
           );
         })}
       </WordWrap>

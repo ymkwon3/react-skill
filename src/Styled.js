@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { BsPatchPlusFill } from "react-icons/bs";
+import { BsPatchPlusFill, BsSearch } from "react-icons/bs";
 
 const Root = styled.div`
   --c: #ffffff;
@@ -30,9 +30,7 @@ const Header = styled.div`
 // 헤더 밑의 div
 const Container = styled.div`
   width: 100%;
-  max-height: 60vh;
   padding: 30px;
-  overflow: scroll;
 `;
 
 // Add 페이지 div
@@ -61,7 +59,6 @@ const InputContainer = styled.div`
     border-bottom: 1px solid var(--pc);
     color: #000000;
     font-size: 20px;
-    font-family: "Cute Font";
   }
 
   label {
@@ -108,11 +105,12 @@ const InputContainer = styled.div`
 const WordWrap = styled.div`
   border: 1px solid var(--pc);
   border-radius: 15px;
+  height: 60vh;
   flex-wrap: wrap;
   padding: 30px;
   gap: 20px;
   width: 100%;
-
+  overflow: scroll;
   @media only screen and (min-width: 1024px) {
     width: 1024px;
   }
@@ -188,4 +186,45 @@ const AddIcon = styled(BsPatchPlusFill)`
   }
 `;
 
-export { Header, Container, Card, WordWrap, InputContainer, Root, AddIcon };
+const SearchIcon = styled(BsSearch)``;
+
+const SearchDiv = styled.div`
+  position: relative;
+  text-align: center;
+  margin-top: -30px;
+  margin-bottom: 30px;
+  .search-icon {
+    position: absolute;
+    user-select: none;
+    z-index: -1;
+    color: var(--pc);
+  }
+`;
+
+const SearchInput = styled.input`
+  background-color: transparent;
+  padding: 20px 60px;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-bottom: 2px solid var(--pc);
+  outline: none;
+  transition: 0.2s;
+  &:not(:placeholder-shown),&:focus {
+    width: 320px;
+  }
+`;
+
+export {
+  Header,
+  Container,
+  Card,
+  WordWrap,
+  InputContainer,
+  Root,
+  AddIcon,
+  SearchIcon,
+  SearchDiv,
+  SearchInput
+};

@@ -10,19 +10,16 @@ import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin5Fill } from "react-icons/ri"
 
 const WordCard = forwardRef(({value}, ref) => {
-  // 해당 단어가 체크되었는지 확인하는 state
-  const [checked, setChecked] = React.useState(value.checked);
-  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
   const term = value.term;
   const mean = value.mean;
   const link = value.link;
+  const checked = value.checked;
 
   const check = () => {
     dispatch(checkWordFB({ term: term, mean: mean, link: link, checked: !checked }));
-    setChecked(!checked);
   }
 
   const deleteEvent = () => {
@@ -30,6 +27,7 @@ const WordCard = forwardRef(({value}, ref) => {
       dispatch(deleteWordFB(term))
     }
   }
+  
   return (
     <Card className="flex-column-ss" checked={checked} ref={ref}>
       <BsCheckLg className="bsCheckLg hoverEvent" size={25} onClick={()=> check()}></BsCheckLg>

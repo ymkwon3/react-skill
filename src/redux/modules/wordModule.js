@@ -10,6 +10,7 @@ import {
   limit,
   startAfter,
   orderBy,
+  where,
 } from "firebase/firestore";
 
 const words_collection = collection(db, "words");
@@ -17,11 +18,13 @@ const words_collection = collection(db, "words");
 // Actions
 const LOAD = "wordModules/LOAD";
 const DELETE = "wordModules/DELETE";
+const SEARCH = "wordModules/SEARCH";
 
 const initialState = {
   words: [],
   lastValue: null,
   progress: 0,
+  isSearch: false,
 };
 
 // Action Creators
@@ -33,13 +36,17 @@ export function deleteWord(term) {
   return { type: DELETE, term };
 }
 
+export function searchWord(word_list) {
+  return { type: SEARCH, word_list };
+}
+
 // middlewares
 export const loadWordFB = last => {
   // firestore의 전체 데이터 불러오기
   return async function (dispatch) {
     const q = last
-      ? query(words_collection, orderBy("term"), startAfter(last), limit(3))
-      : query(words_collection, orderBy("term"), limit(3));
+      ? query(words_collection, orderBy("term"), startAfter(last), limit(15))
+      : query(words_collection, orderBy("term"), limit(15));
     const data = await getDocs(q);
     let list = [];
     data.forEach(v => {
@@ -78,11 +85,31 @@ export const checkWordFB = obj => {
   };
 };
 
+export const searchWordFB = term => {
+  return async function (dispatch) {
+    const q = query(
+      words_collection,
+      where("term", ">=", term),
+      where("term", "<=", term + "\uf8ff")
+    );
+    const data = await getDocs(q);
+
+    const list = [];
+    data.forEach(v => {
+      list.push(v.data());
+    });
+
+    term === "" ? dispatch(loadWordFB(null)) : dispatch(searchWord(list));
+  };
+};
+
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case "wordModules/LOAD": {
-      const word_list = action.last ? [...state.words, ...action.word_list] : [...action.word_list];
+    case LOAD: {
+      const word_list = action.last
+        ? [...state.words, ...action.word_list]
+        : [...action.word_list];
       // 데이터베이스에 단어가 없으면 progress를 0으로, 단어가 존재하면 누적
       const progress =
         word_list.length != 0
@@ -90,21 +117,26 @@ export default function reducer(state = initialState, action = {}) {
               return cur.checked ? acc + 1 : acc + 0;
             }, 0)
           : 0;
-
       return {
         ...state,
         progress,
         words: word_list,
         lastValue: word_list[word_list.length - 1].term,
+        isSearch: false,
       };
     }
-    case "wordModules/DELETE": {
+
+    case DELETE: {
       let progress = state.progress;
       const words = state.words.filter(v => {
-        (v.term === action.term && action.checked) && progress--;
-        return v.term != action.term
+        v.term === action.term && action.checked && progress--;
+        return v.term != action.term;
       });
-      return { ...state, words: words, progress};
+      return { ...state, words: words, progress };
+    }
+
+    case SEARCH: {
+      return { ...state, words: action.word_list, progress: 0, isSearch: true };
     }
     default:
       return state;
