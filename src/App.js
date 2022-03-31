@@ -9,10 +9,11 @@ import Add from "./components/Add";
 import Bike from "./components/Bike";
 
 function App() {
-  const [color, setColor] = React.useState("c1");
+  const [color, setColor] = React.useState("#ff6e60");
+
   // 헤더 클릭 시, primary color 변경
   const setTheme = () => {
-    color === "c1" ? setColor("c2") : setColor("c1");
+    color === "#ff6e60" ? setColor("#6263a2") : setColor("#ff6e60");
   }
 
   return (

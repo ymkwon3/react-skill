@@ -2,14 +2,10 @@ import styled, { css } from "styled-components";
 import { BsPatchPlusFill, BsSearch } from "react-icons/bs";
 
 const Root = styled.div`
-  --c: #ffffff;
-  --pc: ${props => {
-    switch (props.c) {
-      case "c1":
-        return "#ff6e60";
-      case "c2":
-        return "#6263a2";
-    }
+  ${({ c }) => {
+    return css`
+      --pc: ${c};
+    `;
   }};
 `;
 
@@ -211,7 +207,8 @@ const SearchInput = styled.input`
   border-bottom: 2px solid var(--pc);
   outline: none;
   transition: 0.2s;
-  &:not(:placeholder-shown),&:focus {
+  &:not(:placeholder-shown),
+  &:focus {
     width: 320px;
   }
 `;
@@ -226,5 +223,5 @@ export {
   AddIcon,
   SearchIcon,
   SearchDiv,
-  SearchInput
+  SearchInput,
 };
